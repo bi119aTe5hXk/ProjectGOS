@@ -32,5 +32,7 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>Camera for AR</string>
 </dict>
 </plist>

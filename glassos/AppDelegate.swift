@@ -15,6 +15,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        let userdefault = UserDefaults.standard
+        userdefault.register(defaults: ["leftP" : 139.0])
+        userdefault.register(defaults: ["rightP" : 758.0])
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

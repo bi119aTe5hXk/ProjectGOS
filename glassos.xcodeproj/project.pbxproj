@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		47BF3FCD24C9C28B00301A87 /* VideoCapture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 47BF3FCC24C9C28B00301A87 /* VideoCapture.swift */; };
+		47F46AE8253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 47F46AE7253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel */; };
 		86C9170624C85E2A003C177A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9170524C85E2A003C177A /* AppDelegate.swift */; };
 		86C9170824C85E2A003C177A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9170724C85E2A003C177A /* ViewController.swift */; };
 		86C9170A24C85E2E003C177A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C9170924C85E2E003C177A /* Assets.xcassets */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		47BF3FCC24C9C28B00301A87 /* VideoCapture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCapture.swift; sourceTree = "<group>"; };
+		47F46AE7253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = JPTrafficSignObjectDetector.mlmodel; sourceTree = "<group>"; };
 		86C9170224C85E2A003C177A /* glassos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glassos.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C9170524C85E2A003C177A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86C9170724C85E2A003C177A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,6 +60,7 @@
 				86C9170524C85E2A003C177A /* AppDelegate.swift */,
 				47BF3FCC24C9C28B00301A87 /* VideoCapture.swift */,
 				86C9170724C85E2A003C177A /* ViewController.swift */,
+				47F46AE7253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel */,
 				86C9170924C85E2E003C177A /* Assets.xcassets */,
 				86C9170B24C85E2E003C177A /* Main.storyboard */,
 				86C9170E24C85E2E003C177A /* Info.plist */,
@@ -138,6 +141,7 @@
 			files = (
 				86C9170824C85E2A003C177A /* ViewController.swift in Sources */,
 				47BF3FCD24C9C28B00301A87 /* VideoCapture.swift in Sources */,
+				47F46AE8253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel in Sources */,
 				86C9170624C85E2A003C177A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

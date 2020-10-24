@@ -90,9 +90,11 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             position: .unspecified).devices.first
         
         do {
+            showTextOnGlass(string: "Loading Camera...\nPlease wait...")
             print("Using external camera ID:\(videoDevice!.localizedName)")
             deviceInput = try AVCaptureDeviceInput(device: videoDevice!)
         } catch {
+            showTextOnGlass(string: "Error\nCamera not found!")
             print("Could not create video device input: \(error)")
             return
         }
@@ -102,6 +104,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         // Add a video input
         guard session.canAddInput(deviceInput) else {
+            showTextOnGlass(string: "Error\nCould not load video device, is it busy?")
             print("Could not add video device input to the session")
             session.commitConfiguration()
             return
@@ -114,6 +117,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
             videoDataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
         } else {
+            showTextOnGlass(string: "Error\nCould not load video data session, is camera busy?")
             print("Could not add video data output to the session")
             session.commitConfiguration()
             return
@@ -148,14 +152,15 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
     func setupVision() -> NSError? {
         // Setup Vision parts
         let error: NSError! = nil
-        
+        showTextOnGlass(string: "Loading AI model...\nPlease wait...")
         guard let modelURL = Bundle.main.url(forResource: modelName, withExtension: "mlmodelc") else {
             return NSError(domain: "VisionObjectRecognitionViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
         }
         do {
             let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
             let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: { (request, error) in
-                
+                self.showTextOnGlass(string: "+")
+                self.showImageOnGlass(img:NSImage(named:""))
                 DispatchQueue.main.async(execute: {
                     // perform all the UI updates on the main queue
                     if let results = request.results {
@@ -168,6 +173,7 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             })
             self.requests = [objectRecognition]
         } catch let error as NSError {
+            showTextOnGlass(string: "Error\nLoad AI model error.")
             print("Model loading went wrong: \(error)")
         }
         
@@ -184,17 +190,22 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
             
             let topLabelObservation = objectObservation.labels[0]
             print("Identifier:\(topLabelObservation.identifier), confidence:\(topLabelObservation.confidence)")
+            showTextOnGlass(string: "\(topLabelObservation.identifier)\n\(topLabelObservation.confidence)")
         }
     }
     
     // MARK: - Side by side UI
     func showTextOnGlass(string:String){
-        leftTextField.stringValue = string
-        rightTextField.stringValue = string
+        DispatchQueue.main.async {
+            self.leftTextField.stringValue = string
+            self.rightTextField.stringValue = string
+        }
     }
-    func showImageOnGlass(img:NSImage){
-        leftImageView.image = img
-        rightImageView.image = img
+    func showImageOnGlass(img:NSImage?){
+        DispatchQueue.main.async {
+            self.leftImageView.image = img
+            self.rightImageView.image = img
+        }
     }
     func setViewObjectPosition(left: CGFloat, right: CGFloat) {
         let leftV = leftView.frame
@@ -268,10 +279,6 @@ class ViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDele
         userdefault.setValue(Float(right), forKey: "rightP")
         userdefault.synchronize()
     }
-    
-    
-    
-    
     
 
 }

@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  glassos
+//  ProjectGOS
 //
 //  Created by billgateshxk on 2020/07/22.
 //  Copyright © 2020 bi119aTe5hXk. All rights reserved.

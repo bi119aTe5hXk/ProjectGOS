@@ -16,13 +16,13 @@
 
 /* Begin PBXFileReference section */
 		47F46AE7253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = JPTrafficSignObjectDetector.mlmodel; sourceTree = "<group>"; };
-		86C9170224C85E2A003C177A /* glassos.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = glassos.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		86C9170224C85E2A003C177A /* ProjectGOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectGOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C9170524C85E2A003C177A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		86C9170724C85E2A003C177A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		86C9170924C85E2E003C177A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C9170C24C85E2E003C177A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		86C9170E24C85E2E003C177A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		86C9170F24C85E2E003C177A /* glassos.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = glassos.entitlements; sourceTree = "<group>"; };
+		86C9170F24C85E2E003C177A /* ProjectGOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProjectGOS.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +39,7 @@
 		86C916F924C85E2A003C177A = {
 			isa = PBXGroup;
 			children = (
-				86C9170424C85E2A003C177A /* glassos */,
+				86C9170424C85E2A003C177A /* ProjectGOS */,
 				86C9170324C85E2A003C177A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,12 +47,12 @@
 		86C9170324C85E2A003C177A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				86C9170224C85E2A003C177A /* glassos.app */,
+				86C9170224C85E2A003C177A /* ProjectGOS.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		86C9170424C85E2A003C177A /* glassos */ = {
+		86C9170424C85E2A003C177A /* ProjectGOS */ = {
 			isa = PBXGroup;
 			children = (
 				86C9170524C85E2A003C177A /* AppDelegate.swift */,
@@ -61,17 +61,17 @@
 				86C9170924C85E2E003C177A /* Assets.xcassets */,
 				86C9170B24C85E2E003C177A /* Main.storyboard */,
 				86C9170E24C85E2E003C177A /* Info.plist */,
-				86C9170F24C85E2E003C177A /* glassos.entitlements */,
+				86C9170F24C85E2E003C177A /* ProjectGOS.entitlements */,
 			);
-			path = glassos;
+			path = ProjectGOS;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		86C9170124C85E2A003C177A /* glassos */ = {
+		86C9170124C85E2A003C177A /* ProjectGOS */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 86C9171224C85E2E003C177A /* Build configuration list for PBXNativeTarget "glassos" */;
+			buildConfigurationList = 86C9171224C85E2E003C177A /* Build configuration list for PBXNativeTarget "ProjectGOS" */;
 			buildPhases = (
 				86C916FE24C85E2A003C177A /* Sources */,
 				86C916FF24C85E2A003C177A /* Frameworks */,
@@ -81,9 +81,9 @@
 			);
 			dependencies = (
 			);
-			name = glassos;
+			name = ProjectGOS;
 			productName = glassos;
-			productReference = 86C9170224C85E2A003C177A /* glassos.app */;
+			productReference = 86C9170224C85E2A003C177A /* ProjectGOS.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -101,7 +101,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 86C916FD24C85E2A003C177A /* Build configuration list for PBXProject "glassos" */;
+			buildConfigurationList = 86C916FD24C85E2A003C177A /* Build configuration list for PBXProject "ProjectGOS" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -114,7 +114,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				86C9170124C85E2A003C177A /* glassos */,
+				86C9170124C85E2A003C177A /* ProjectGOS */,
 			);
 		};
 /* End PBXProject section */
@@ -273,18 +273,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = glassos/glassos.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ProjectGOS/ProjectGOS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = HR66SGQEZ4;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = glassos/Info.plist;
+				INFOPLIST_FILE = ProjectGOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.bi119aTe5hXk.glassos;
+				PRODUCT_BUNDLE_IDENTIFIER = net.bi119aTe5hXk.ProjectGOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -293,18 +295,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = glassos/glassos.entitlements;
+				CODE_SIGN_ENTITLEMENTS = ProjectGOS/ProjectGOS.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = HR66SGQEZ4;
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = glassos/Info.plist;
+				INFOPLIST_FILE = ProjectGOS/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = net.bi119aTe5hXk.glassos;
+				PRODUCT_BUNDLE_IDENTIFIER = net.bi119aTe5hXk.ProjectGOS;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -312,7 +316,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		86C916FD24C85E2A003C177A /* Build configuration list for PBXProject "glassos" */ = {
+		86C916FD24C85E2A003C177A /* Build configuration list for PBXProject "ProjectGOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				86C9171024C85E2E003C177A /* Debug */,
@@ -321,7 +325,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		86C9171224C85E2E003C177A /* Build configuration list for PBXNativeTarget "glassos" */ = {
+		86C9171224C85E2E003C177A /* Build configuration list for PBXNativeTarget "ProjectGOS" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				86C9171324C85E2E003C177A /* Debug */,

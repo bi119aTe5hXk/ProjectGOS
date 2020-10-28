@@ -4,7 +4,7 @@
 
 - EPSON BT-35E (USB-C connection is required. Camera and sensor won't work in HDMI/USB3 mode)
 - USB-C/Thunderbolt 3 cable (Some USB-C cable will not work)
-- Macintosh (macOS 10.14+) with USB-C/Thunderbolt3 port
+- Macintosh (macOS 10.15+) with USB-C/Thunderbolt3 port
 
 ## How to use
 

@@ -9,24 +9,25 @@
 import Foundation
 import Cocoa
 
-func formatText(string:String) -> String {
+func formatText(string:String) -> [String] {
     switch string {
-    
     case "Stop":
-        return "止まれ"
+        return ["止まれ","Stop"]
     case "Slow down":
-        return "徐行"
+        
+        return ["徐行","Slowdown"]
         
     case "No bicycles":
-        return "自転車走行禁止"
+        return ["自転車走行禁止","Nobicycles"]
         
     case "Traffic mirror":
-        return "交差点注意"
+        return ["交差点注意","Warning"]
         
-        
+    case "No entry":
+        return ["立ち入り禁止","Noentry"]
         
     default:
-        return string
+        return [string,""]
     }
 }
 

@@ -188,15 +188,16 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             let topLabelObservation = objectObservation.labels[0]
             print("Identifier:\(topLabelObservation.identifier), confidence:\(topLabelObservation.confidence)")
             //showText(string: "\(topLabelObservation.identifier)\n\(topLabelObservation.confidence)")
-            showTextOnGlass(string: formatText(string: topLabelObservation.identifier))
+            showTextOnGlass(string: "\(formatText(string: topLabelObservation.identifier)[0])\n\(topLabelObservation.confidence)")
+            self.showImageOnGlass(img:NSImage(named:formatText(string: topLabelObservation.identifier)[1]))
         }
     }
     
     // MARK: - Side by side UI
     func showTextOnGlass(string:String){
         DispatchQueue.main.async {
-            self.leftTextField.stringValue = string
-            self.rightTextField.stringValue = string
+            self.leftTextField.stringValue = "\n\(string)"
+            self.rightTextField.stringValue = "\n\(string)"
         }
     }
     func showImageOnGlass(img:NSImage?){

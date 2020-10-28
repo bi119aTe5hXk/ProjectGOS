@@ -766,7 +766,7 @@
                                                     <rect key="frame" x="169" y="20" width="313" height="160"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" selectable="YES" alignment="center" title="Multiline Label" id="fzA-jX-OB5">
-                                                        <font key="font" size="30" name="HelveticaNeue"/>
+                                                        <font key="font" size="40" name="HelveticaNeue"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
@@ -786,7 +786,7 @@
                                                     <rect key="frame" x="169" y="20" width="313" height="160"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                     <textFieldCell key="cell" selectable="YES" alignment="center" title="Multiline Label" id="Ybd-43-gD0">
-                                                        <font key="font" size="30" name="HelveticaNeue"/>
+                                                        <font key="font" size="40" name="HelveticaNeue"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>

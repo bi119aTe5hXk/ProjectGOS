@@ -7,18 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4709D26125499481006F5505 /* DisplayInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709D26025499481006F5505 /* DisplayInfo.swift */; };
+		4709D2642549949D006F5505 /* AIHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4709D2632549949D006F5505 /* AIHandler.swift */; };
 		47F46AE8253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 47F46AE7253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel */; settings = {ATTRIBUTES = (no_codegen, ); }; };
 		86C9170624C85E2A003C177A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9170524C85E2A003C177A /* AppDelegate.swift */; };
-		86C9170824C85E2A003C177A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9170724C85E2A003C177A /* ViewController.swift */; };
+		86C9170824C85E2A003C177A /* SBSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86C9170724C85E2A003C177A /* SBSViewController.swift */; };
 		86C9170A24C85E2E003C177A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86C9170924C85E2E003C177A /* Assets.xcassets */; };
 		86C9170D24C85E2E003C177A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 86C9170B24C85E2E003C177A /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4709D26025499481006F5505 /* DisplayInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayInfo.swift; sourceTree = "<group>"; };
+		4709D2632549949D006F5505 /* AIHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIHandler.swift; sourceTree = "<group>"; };
 		47F46AE7253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = JPTrafficSignObjectDetector.mlmodel; sourceTree = "<group>"; };
 		86C9170224C85E2A003C177A /* ProjectGOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ProjectGOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86C9170524C85E2A003C177A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		86C9170724C85E2A003C177A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		86C9170724C85E2A003C177A /* SBSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SBSViewController.swift; sourceTree = "<group>"; };
 		86C9170924C85E2E003C177A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		86C9170C24C85E2E003C177A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		86C9170E24C85E2E003C177A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -56,7 +60,9 @@
 			isa = PBXGroup;
 			children = (
 				86C9170524C85E2A003C177A /* AppDelegate.swift */,
-				86C9170724C85E2A003C177A /* ViewController.swift */,
+				86C9170724C85E2A003C177A /* SBSViewController.swift */,
+				4709D2632549949D006F5505 /* AIHandler.swift */,
+				4709D26025499481006F5505 /* DisplayInfo.swift */,
 				47F46AE7253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel */,
 				86C9170924C85E2E003C177A /* Assets.xcassets */,
 				86C9170B24C85E2E003C177A /* Main.storyboard */,
@@ -136,8 +142,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				86C9170824C85E2A003C177A /* ViewController.swift in Sources */,
+				86C9170824C85E2A003C177A /* SBSViewController.swift in Sources */,
 				47F46AE8253EFC7F0071B327 /* JPTrafficSignObjectDetector.mlmodel in Sources */,
+				4709D26125499481006F5505 /* DisplayInfo.swift in Sources */,
+				4709D2642549949D006F5505 /* AIHandler.swift in Sources */,
 				86C9170624C85E2A003C177A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

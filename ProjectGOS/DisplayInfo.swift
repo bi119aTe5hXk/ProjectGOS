@@ -9,31 +9,24 @@
 import Foundation
 import Cocoa
 
-func showText(string:String) {
-    let sbs = SBSViewController()
-    var showStr = string
-    
+func formatText(string:String) -> String {
     switch string {
     
     case "Stop":
-        showStr = "止まれ"
+        return "止まれ"
     case "Slow down":
-        showStr = "徐行"
+        return "徐行"
         
     case "No bicycles":
-        showStr = "自転車走行禁止"
+        return "自転車走行禁止"
         
     case "Traffic mirror":
-        showStr = "交差点注意"
+        return "交差点注意"
         
         
         
     default:
-        showStr = string
+        return string
     }
-    sbs.showTextOnGlass(string: showStr)
 }
-func showImage(img:NSImage){
-    let sbs = SBSViewController()
-    sbs.showImageOnGlass(img: img)
-}
+

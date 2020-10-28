@@ -45,7 +45,6 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
     
 
     private let session = AVCaptureSession()
-    //private var previewLayer: AVCaptureVideoPreviewLayer! = nil
     private let videoDataOutput = AVCaptureVideoDataOutput()
 
     // MARK: - Video Capture
@@ -59,9 +58,6 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
-        
-        
-        
         let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up, options: [:])
         do {
             try imageRequestHandler.perform(requests)
@@ -81,7 +77,7 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         let videoDevice = AVCaptureDevice.DiscoverySession.init(
             deviceTypes: [
                     //.builtInWideAngleCamera,
-                    .externalUnknown
+                    .externalUnknown //macOS only
             ],
             mediaType: .video,
             position: .unspecified).devices.first
@@ -97,7 +93,8 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         }
         
         session.beginConfiguration()
-        session.sessionPreset = .vga640x480 // Model image size is smaller.
+        //Image size for model is smaller
+        session.sessionPreset = .vga640x480
         
         // Add a video input
         guard session.canAddInput(deviceInput) else {
@@ -134,20 +131,18 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         session.commitConfiguration()
         setupVision()
         
-        // start the capture
+        // Start the capture
         startCaptureSession()
     }
 
 
     // MARK: - AI Object Recognition & Display
 
-
     // Vision parts
     private var requests = [VNRequest]()
 
     @discardableResult
     func setupVision() -> NSError? {
-        // Setup Vision parts
         let error: NSError! = nil
         showTextOnGlass(string: "Loading AI model...\nPlease wait...")
         guard let modelURL = Bundle.main.url(forResource: modelName, withExtension: "mlmodelc") else {
@@ -161,8 +156,6 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
                 DispatchQueue.main.async(execute: {
                     // perform all the UI updates on the main queue
                     if let results = request.results {
-    //                        self.drawVisionRequestResults(results)
-                        
     //                        print("results:\(results)")
                         self.showVisionRequestResults(results)
                     }
@@ -222,7 +215,6 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
 
     @IBAction func viewPointForward(_ sender: Any) {
 //        print("moving view point forward...")
-        
         let leftV = leftView.frame
         let rightV = rightView.frame
         leftView.frame = CGRect(x: leftV.origin.x - VPMovingDistance,

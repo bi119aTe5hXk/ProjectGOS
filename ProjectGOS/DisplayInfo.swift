@@ -10,6 +10,7 @@ import Foundation
 import Cocoa
 
 func formatText(string:String) -> [String] {
+    //format: ["Display name", "Name of the traffic sign image file"]
     switch string {
     case "Stop":
         return ["止まれ","Stop"]

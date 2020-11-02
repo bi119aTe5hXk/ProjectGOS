@@ -16,7 +16,7 @@ func formatText(string:String) -> [String] {
         return ["止まれ","Stop"]
     case "Slow down":
         
-        return ["徐行","Slowdown"]
+        return ["徐行注意","Slowdown"]
         
     case "No bicycles":
         return ["自転車走行禁止","Nobicycles"]

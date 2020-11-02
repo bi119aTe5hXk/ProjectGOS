@@ -18,6 +18,11 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
     
     //Model file name
     let modelName = "JPTrafficSignObjectDetector"
+    
+    //Audio device name
+    let audioInName = "BT-35E"
+    let audioOutName = "EPSON HMD"
+    
     var bufferSize: CGSize = .zero
     
     let userdefault = UserDefaults.standard
@@ -28,9 +33,14 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
     @IBOutlet weak var leftImageView: NSImageView!
     @IBOutlet weak var rightImageView: NSImageView!
     
+    var currentText: String?
+    var currentImageName: String?
+    var viewResetTimer:Timer? = Timer.init()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let leftP = CGFloat(userdefault.float(forKey: "leftP"))
         let rightP = CGFloat(userdefault.float(forKey: "rightP"))
         setViewObjectPosition(left: leftP, right: rightP)
@@ -40,6 +50,9 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         
         setupAVCapture()
         
+    }
+    override func viewDidAppear() {
+        view.window?.toggleFullScreen(self)
     }
     
     
@@ -58,6 +71,7 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         guard let pixelBuffer = CMSampleBufferGetImageBuffer(sampleBuffer) else {
             return
         }
+        //video data to VN
         let imageRequestHandler = VNImageRequestHandler(cvPixelBuffer: pixelBuffer, orientation: .up, options: [:])
         do {
             try imageRequestHandler.perform(requests)
@@ -104,6 +118,24 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             return
         }
         session.addInput(deviceInput)
+        
+        //Add a audio input
+        let audioInput = AVCaptureDevice.DiscoverySession.init(
+            deviceTypes: [
+                    .externalUnknown //macOS only
+            ],
+            mediaType: .audio,
+            position: .unspecified).devices
+        for device in audioInput {
+            if device.description == audioInName{
+                //mic
+            }
+            if device.description == audioOutName{
+                //headphone
+            }
+        }
+        
+        
         if session.canAddOutput(videoDataOutput) {
             session.addOutput(videoDataOutput)
             // Add a video data output
@@ -134,6 +166,7 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         // Start the capture
         startCaptureSession()
     }
+    // MARK: - Video recording
 
 
     // MARK: - AI Object Recognition & Display
@@ -149,16 +182,20 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             return NSError(domain: "VisionObjectRecognitionViewController", code: -1, userInfo: [NSLocalizedDescriptionKey: "Model file is missing"])
         }
         do {
+            self.resetContent()
+            print("reset content from setupVision")
             let visionModel = try VNCoreMLModel(for: MLModel(contentsOf: modelURL))
             let objectRecognition = VNCoreMLRequest(model: visionModel, completionHandler: { (request, error) in
-                self.showTextOnGlass(string: "+")
-                self.showImageOnGlass(img:NSImage(named:""))
                 DispatchQueue.main.async(execute: {
                     // perform all the UI updates on the main queue
+                    
+//                    self.resetContent()
                     if let results = request.results {
     //                        print("results:\(results)")
                         self.showVisionRequestResults(results)
                     }
+                    
+                    
                 })
             })
             self.requests = [objectRecognition]
@@ -177,12 +214,35 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             }
             // Select only the label with the highest confidence.
     //            print("objectObservation:\(objectObservation.labels)")
-            
             let topLabelObservation = objectObservation.labels[0]
             print("Identifier:\(topLabelObservation.identifier), confidence:\(topLabelObservation.confidence)")
             //showText(string: "\(topLabelObservation.identifier)\n\(topLabelObservation.confidence)")
-            showTextOnGlass(string: "\(formatText(string: topLabelObservation.identifier)[0])\n\(topLabelObservation.confidence)")
-            self.showImageOnGlass(img:NSImage(named:formatText(string: topLabelObservation.identifier)[1]))
+
+            if (topLabelObservation.confidence >= 0.95) {
+                self.currentText = "\(formatText(string: topLabelObservation.identifier)[0])"
+                self.currentImageName = formatText(string: topLabelObservation.identifier)[1]
+                displayInfo()
+            }
+//            displayInfo(text: "\(formatText(string: topLabelObservation.identifier)[0])\n\(topLabelObservation.confidence)", image: NSImage(named:formatText(string: topLabelObservation.identifier)[1]))
+            
+//            //show content for 3s
+//            let viewResetTimer:Timer?
+//            viewResetTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.resetContent), userInfo: nil, repeats: true)
+
+        }
+    }
+    
+    func displayInfo() {
+        if let text = self.currentText,
+           let imageName = self.currentImageName,
+           self.leftTextField.stringValue != "\n\(self.currentText)" {
+            self.showTextOnGlass(string: text)
+            self.showImageOnGlass(img: NSImage(named:imageName))
+            
+            //show content for 3s
+            
+            self.viewResetTimer?.invalidate()
+            self.viewResetTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.resetContent), userInfo: nil, repeats: true)
         }
     }
     
@@ -192,6 +252,12 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             self.leftTextField.stringValue = "\n\(string)"
             self.rightTextField.stringValue = "\n\(string)"
         }
+    }
+    @objc func resetContent(){
+        self.showTextOnGlass(string: "+")
+        self.showImageOnGlass(img:NSImage(named:""))
+        
+        
     }
     func showImageOnGlass(img:NSImage?){
         DispatchQueue.main.async {

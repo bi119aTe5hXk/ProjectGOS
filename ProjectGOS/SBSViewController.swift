@@ -12,7 +12,17 @@ import CoreMedia
 import VideoToolbox
 import Vision
 
-class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDelegate{
+class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferDelegate, AVCaptureFileOutputRecordingDelegate{
+    func fileOutput(_ output: AVCaptureFileOutput, didFinishRecordingTo outputFileURL: URL, from connections: [AVCaptureConnection], error: Error?) {
+        // save video to camera roll
+        if error == nil {
+            print("video saved")
+        }else{
+            print(error)
+        }
+
+    }
+    
     //View point moving distance
     let VPMovingDistance: CGFloat = 1.0
     
@@ -20,8 +30,8 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
     let modelName = "JPTrafficSignObjectDetector"
     
     //Audio device name
-    let audioInName = "BT-35E"
-    let audioOutName = "EPSON HMD"
+//    let audioInName = "BT-35E"
+//    let audioOutName = "EPSON HMD"
     
     var bufferSize: CGSize = .zero
     
@@ -36,6 +46,7 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
     var currentText: String?
     var currentImageName: String?
     var viewResetTimer:Timer? = Timer.init()
+    var movieOutput = AVCaptureMovieFileOutput()
 
 
     override func viewDidLoad() {
@@ -53,6 +64,10 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
     }
     override func viewDidAppear() {
         view.window?.toggleFullScreen(self)
+    }
+    
+    override func viewWillDisappear() {
+        movieOutput.stopRecording()
     }
     
     
@@ -87,7 +102,7 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
     func setupAVCapture() {
         var deviceInput: AVCaptureDeviceInput!
         
-        // Select a video device, make an input
+        // Select a video device
         let videoDevice = AVCaptureDevice.DiscoverySession.init(
             deviceTypes: [
                     //.builtInWideAngleCamera,
@@ -95,6 +110,26 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             ],
             mediaType: .video,
             position: .unspecified).devices.first
+        
+        //Add a audio input
+//        let audioInput = AVCaptureDevice.DiscoverySession.init(
+//            deviceTypes: [
+//
+//                    .externalUnknown //macOS only
+//            ],
+//            mediaType: nil,
+//            position: .unspecified).devices
+//        for device in audioInput {
+//            print("found audo devices:\(device.description)")
+//            if device.description == audioInName{
+//                //mic
+//                print("Device Mic found!")
+//            }
+//            if device.description == audioOutName{
+//                //headphone
+//                print("Device Headphone found!")
+//            }
+//        }
         
         do {
             showTextOnGlass(string: "Loading Camera...\nPlease wait...")
@@ -108,7 +143,7 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         
         session.beginConfiguration()
         //Image size for model is smaller
-        session.sessionPreset = .vga640x480
+        session.sessionPreset = .hd1280x720
         
         // Add a video input
         guard session.canAddInput(deviceInput) else {
@@ -119,26 +154,14 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         }
         session.addInput(deviceInput)
         
-        //Add a audio input
-        let audioInput = AVCaptureDevice.DiscoverySession.init(
-            deviceTypes: [
-                    .externalUnknown //macOS only
-            ],
-            mediaType: .audio,
-            position: .unspecified).devices
-        for device in audioInput {
-            if device.description == audioInName{
-                //mic
-            }
-            if device.description == audioOutName{
-                //headphone
-            }
-        }
+        
         
         
         if session.canAddOutput(videoDataOutput) {
+            // Add a video data output for video recording
+            session.addOutput(movieOutput)
+            // Add a video data output to VN
             session.addOutput(videoDataOutput)
-            // Add a video data output
             videoDataOutput.alwaysDiscardsLateVideoFrames = true
             videoDataOutput.videoSettings = [kCVPixelBufferPixelFormatTypeKey as String: Int(kCVPixelFormatType_420YpCbCr8BiPlanarFullRange)]
             videoDataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
@@ -165,12 +188,32 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         
         // Start the capture
         startCaptureSession()
+        
+        //start video recording
+        recordingVideo()
     }
     // MARK: - Video recording
-
+    func recordingVideo() {
+        if movieOutput.isRecording {
+            print("video is recording")
+        //movieOutput.stopRecording()
+        } else {
+            print("start record video")
+            let paths = FileManager.default.urls(for: .downloadsDirectory, in: .allDomainsMask)
+            
+            let date = Date()
+            let components:DateComponents = Calendar.current.dateComponents(in: TimeZone.current, from: date)
+            let fileName = "video-\(components.date!).mov"
+            
+            let fileUrl = paths[0].appendingPathComponent(fileName)
+            print("save path: \(fileUrl)")
+        //try? FileManager.default.removeItem(at: fileUrl)
+            movieOutput.startRecording(to: fileUrl, recordingDelegate: self as AVCaptureFileOutputRecordingDelegate)
+        }
+    }
 
     // MARK: - AI Object Recognition & Display
-
+    
     // Vision parts
     private var requests = [VNRequest]()
 

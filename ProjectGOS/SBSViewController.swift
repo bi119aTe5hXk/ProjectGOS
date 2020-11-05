@@ -154,9 +154,6 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         }
         session.addInput(deviceInput)
         
-        
-        
-        
         if session.canAddOutput(videoDataOutput) {
             // Add a video data output for video recording
             session.addOutput(movieOutput)
@@ -179,6 +176,37 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             let dimensions = CMVideoFormatDescriptionGetDimensions((videoDevice?.activeFormat.formatDescription)!)
             bufferSize.width = CGFloat(dimensions.width)
             bufferSize.height = CGFloat(dimensions.height)
+            
+            //find best format and frame rate
+//            var bestFormat: AVCaptureDevice.Format? = nil
+//                var bestFrameRateRange: AVFrameRateRange? = nil
+//            for formatf in videoDevice!.formats {
+//                let format = formatf
+//                    print(format)
+//                    for rangef in format.videoSupportedFrameRateRanges {
+//                        let range = rangef
+//                        print(range)
+//                        if (bestFrameRateRange == nil) {
+//                            bestFormat = format
+//                            bestFrameRateRange = range
+//                        } else if range.maxFrameRate > bestFrameRateRange!.maxFrameRate {
+//                            bestFormat = format
+//                            bestFrameRateRange = range
+//                        }
+//                    }
+//                }
+//            print("bestFormat:\(bestFormat),bestFrameRateRange:\(bestFrameRateRange)")
+            
+                //set frame rate to auto (30fps)
+            for vFormat in videoDevice!.formats {
+                var ranges = vFormat.videoSupportedFrameRateRanges as [AVFrameRateRange]
+                var frameRates = ranges[0]
+                videoDevice!.activeFormat = vFormat as AVCaptureDevice.Format
+                videoDevice!.activeVideoMinFrameDuration = frameRates.minFrameDuration
+                videoDevice!.activeVideoMaxFrameDuration = frameRates.maxFrameDuration
+            }
+
+            
             videoDevice!.unlockForConfiguration()
         } catch {
             print(error)
@@ -268,9 +296,6 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             }
 //            displayInfo(text: "\(formatText(string: topLabelObservation.identifier)[0])\n\(topLabelObservation.confidence)", image: NSImage(named:formatText(string: topLabelObservation.identifier)[1]))
             
-//            //show content for 3s
-//            let viewResetTimer:Timer?
-//            viewResetTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.resetContent), userInfo: nil, repeats: true)
 
         }
     }
@@ -282,10 +307,9 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             self.showTextOnGlass(string: text)
             self.showImageOnGlass(img: NSImage(named:imageName))
             
-            //show content for 3s
-            
+            //show content for 2s
             self.viewResetTimer?.invalidate()
-            self.viewResetTimer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector(self.resetContent), userInfo: nil, repeats: true)
+            self.viewResetTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.resetContent), userInfo: nil, repeats: true)
         }
     }
     

@@ -45,8 +45,10 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
     
     var currentText: String?
     var currentImageName: String?
+    var lastVoice: String?
     var viewResetTimer:Timer? = Timer.init()
     var movieOutput = AVCaptureMovieFileOutput()
+    let synth = NSSpeechSynthesizer()
 
 
     override func viewDidLoad() {
@@ -59,7 +61,18 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
         showTextOnGlass(string: "Init...\nPlease wait...")
         sleep(1)
         
+        //Set text to voice service to Japanese
+        for v in NSSpeechSynthesizer.availableVoices {
+            let attrs = NSSpeechSynthesizer.attributes(forVoice: v)
+            if attrs[NSSpeechSynthesizer.VoiceAttributeKey(rawValue: "VoiceLanguage")] as? String == "ja-JP" {
+                synth.setVoice(v)
+                break
+            }
+        }
+        
         setupAVCapture()
+        
+        
         
     }
     override func viewDidAppear() {
@@ -289,10 +302,15 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             print("Identifier:\(topLabelObservation.identifier), confidence:\(topLabelObservation.confidence)")
             //showText(string: "\(topLabelObservation.identifier)\n\(topLabelObservation.confidence)")
 
-            if (topLabelObservation.confidence >= 0.95) {
-                self.currentText = "\(formatText(string: topLabelObservation.identifier)[0])"
-                self.currentImageName = formatText(string: topLabelObservation.identifier)[1]
+            if (topLabelObservation.confidence >= 0.90) {
+                let identifier = topLabelObservation.identifier
+                self.currentText = ProjectGOS.displayInfo(string: identifier)[0]
+                self.currentImageName = ProjectGOS.displayInfo(string: identifier)[1]
+                
                 displayInfo()
+                textToVoice(voice: ProjectGOS.displayInfo(string: identifier)[2])
+                
+                
             }
 //            displayInfo(text: "\(formatText(string: topLabelObservation.identifier)[0])\n\(topLabelObservation.confidence)", image: NSImage(named:formatText(string: topLabelObservation.identifier)[1]))
             
@@ -307,24 +325,30 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             self.showTextOnGlass(string: text)
             self.showImageOnGlass(img: NSImage(named:imageName))
             
+            
             //show content for 2s
             self.viewResetTimer?.invalidate()
             self.viewResetTimer = Timer.scheduledTimer(timeInterval: 2.0, target: self, selector: #selector(self.resetContent), userInfo: nil, repeats: true)
         }
     }
+    func textToVoice(voice:String){
+        if voice != self.lastVoice && !synth.isSpeaking{
+            synth.startSpeaking(voice)
+            self.lastVoice = voice
+        }
+    }
     
     // MARK: - Side by side UI
+    @objc func resetContent(){
+        self.showTextOnGlass(string: "+")
+        self.showImageOnGlass(img:NSImage(named:""))
+        self.lastVoice = ""
+    }
     func showTextOnGlass(string:String){
         DispatchQueue.main.async {
             self.leftTextField.stringValue = "\n\(string)"
             self.rightTextField.stringValue = "\n\(string)"
         }
-    }
-    @objc func resetContent(){
-        self.showTextOnGlass(string: "+")
-        self.showImageOnGlass(img:NSImage(named:""))
-        
-        
     }
     func showImageOnGlass(img:NSImage?){
         DispatchQueue.main.async {

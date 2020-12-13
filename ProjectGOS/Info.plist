@@ -36,5 +36,7 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Using bluetooth to connect and control BLE devices.</string>
 </dict>
 </plist>

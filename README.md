@@ -9,10 +9,8 @@
 
 ## How to use
 
-1. Connect BT-35E with your mac. And set it as extend desktop. 
-2. Build & run
-3. Fullscreen the appliction, and move it to the desktop that shows on BT-35E. 
-4. Build & run GOSControl project to your iOS device.
-5. Connect to ProjectGOS using BLE & set the view point:
-6. Find some traffic sign to recognize.
-7. If it shows error messages, try the "Restart App" button.
+1. Connect BT-35E with your mac.
+2. Build & run both ProjectGOS & GOSControl.
+3. Connect to ProjectGOS using BLE & set the view point:
+4. Find some traffic sign to recognize.
+5. If it shows error messages, try the "Restart App" button.

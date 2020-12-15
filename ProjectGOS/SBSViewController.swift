@@ -160,15 +160,18 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             print("doBLEControl Move VP backward")
             viewPointBackward(self)
             break
+            
         case "0000cb":
             print("doBLEControl Move VP reset")
             resetViewPoint(self)
             break
+            
 //        case "0000cd":
 //            print("doBLEControl get cam preview")
 //            //print(getPreviewPic())
 //            strBLETrasnfer = "PIC.\(getPreviewPic())"
 //            break
+        
         case "00001e":
             strBLETrasnfer = "VD.StopRecording"
             movieOutput.stopRecording()
@@ -432,6 +435,9 @@ class SBSViewController: NSViewController, AVCaptureVideoDataOutputSampleBufferD
             print("videosave error:\(error)")
             setupAVCapture()
         }
+    }
+    func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
+        strBLETrasnfer = "VD.VideoRecording"
     }
 
     // MARK: - AI Object Recognition & Display
